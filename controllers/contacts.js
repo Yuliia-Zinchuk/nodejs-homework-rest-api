@@ -1,14 +1,14 @@
-const Joi = require("joi");
+// const Joi = require("joi");
 
 const contacts = require("../models/contacts");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
 
-const addSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(),
-  phone: Joi.string().required(),
-});
+// const addSchema = Joi.object({
+//   name: Joi.string().required(),
+//   email: Joi.string().required(),
+//   phone: Joi.string().required(),
+// });
 
 const getAll = async (req, res) => {
   // res.json({ message: "template message" });
@@ -45,10 +45,10 @@ const getById = async (req, res) => {
 
 const add = async (req, res) => {
   // try {
-  const { error } = addSchema.validate(req.body);
-  if (error) {
-    throw HttpError(400, error.message);
-  }
+  //   const { error } = addSchema.validate(req.body);
+  //   if (error) {
+  //     throw HttpError(400, error.message);
+  //   }
   //console.log(error);
   const { name, email, phone } = req.body;
   const result = await contacts.addContact(name, email, phone);
