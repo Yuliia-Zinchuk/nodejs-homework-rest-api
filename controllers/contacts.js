@@ -61,10 +61,10 @@ const add = async (req, res) => {
 
 const updateById = async (req, res) => {
   // try {
-  const { error } = addSchema.validate(req.body);
-  if (error) {
-    throw HttpError(400, error.message);
-  }
+  //   const { error } = addSchema.validate(req.body);
+  //   if (error) {
+  //     throw HttpError(400, error.message);
+  //   }
   const { id } = req.params;
   const result = await contacts.updateContact(id, req.body);
   if (!result) {
