@@ -10,7 +10,7 @@ const addSchema = Joi.object({
   phone: Joi.string().required(),
 });
 
-const getAll = async (req, res, next) => {
+const getAll = async (req, res) => {
   // res.json({ message: "template message" });
   //res.send(contactsData);
   //  try {
@@ -22,7 +22,7 @@ const getAll = async (req, res, next) => {
   // }
 };
 
-const getById = async (req, res, next) => {
+const getById = async (req, res) => {
   // try {
   const { id } = req.params;
   // console.log(req.params);
@@ -43,7 +43,7 @@ const getById = async (req, res, next) => {
   // }
 };
 
-const add = async (req, res, next) => {
+const add = async (req, res) => {
   // try {
   const { error } = addSchema.validate(req.body);
   if (error) {
@@ -59,7 +59,7 @@ const add = async (req, res, next) => {
   // }
 };
 
-const updateById = async (req, res, next) => {
+const updateById = async (req, res) => {
   // try {
   const { error } = addSchema.validate(req.body);
   if (error) {
@@ -76,7 +76,7 @@ const updateById = async (req, res, next) => {
   // }
 };
 
-const deleteById = async (req, res, next) => {
+const deleteById = async (req, res) => {
   //  try {
   const { id } = req.params;
   const result = await contacts.removeContact(id);
