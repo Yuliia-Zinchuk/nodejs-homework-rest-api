@@ -1,5 +1,3 @@
-// const Joi = require("joi");
-
 const contacts = require("../models/contacts");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
@@ -84,7 +82,7 @@ const deleteById = async (req, res) => {
     throw HttpError(404, "Not found");
   }
   res.status(200).json({
-    message: "Delete success",
+    message: "Contact deleted",
   });
   // } catch (error) {
   // next(error);
