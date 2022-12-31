@@ -2,6 +2,21 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
+const mongoose = require("mongoose");
+require("dotenv").config();
+
+const { DB_HOST } = process.env;
+
+//console.log(process.env);
+
+// const DB_HOST =
+//   "mongodb+srv://Yuliia:hmsPY1D1WxmdpYJA@cluster0.gasf9oq.mongodb.net/db-contacts?retryWrites=true&w=majority";
+
+mongoose
+  .connect(DB_HOST)
+  .then(() => console.log("Database connection successful"))
+  .catch((error) => console.log(error.message));
+
 const contactsRouter = require("./routes/api/contacts");
 
 const app = express();
@@ -23,54 +38,6 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message });
 });
 
-// app.get("/test", (request, response) => {
-//   response.send("<h2>Home page</h2>");
-// });
-
 module.exports = app;
 
-// //для чего нужны мидлвары
-
-// const moment = require("moment");
-// const fs = require("fs/promises");
-// const contacts = require("./models/contacts.json");
-//const contacts = require("./routes/api/contacts");
-
-// // 1. этот мидл вар подходит всем. здесь выполняется условие, и из-за некст идем далее
-// app.use((req, res, next) => {
-//   console.log("1 middle ware");
-//   next();
-// });
-
-// //2. здесь выводим в лог имя метода, адрес и время запроса
-// app.use(async (req, res, next) => {
-//   const { method, url } = req;
-//   const date = moment().format("YYYY-MM-DD_hh:mm:ss");
-//   await fs.appendFile("./public/server.log", `\n${method} ${url} ${date}`);
-//   next();
-// });
-
-// app.get("/contacts", (req, res) => {
-//   console.log(req.method);
-//   console.log(req.url);
-//   // res.send(contacts);
-//   // res.send(contacts);
-//   //const data = null;
-//   //res.send(data);
-//   // res.json(data);
-//   res.json(contacts);
-// });
-
-// app.get("/products", (req, res) => {
-//   res.json([]);
-// });
-
-// // 3. Здесь выводится ошибка - сообщение, если адрес не был найден.
-// //сперва он проверяет все роуты и если ни один не подошел, тогда выполняется этот мидлвар
-
-// app.use((req, res) => {
-//   res.status(404).json({ message: "Not found" });
-// });
-
-// // 4. на этапе разработки позволяет выполнять кросс-доменные запросы
-// //app.use(cors());
+//  hmsPY1D1WxmdpYJA  - password for user in project mongoDB
