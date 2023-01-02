@@ -7,11 +7,6 @@ require("dotenv").config();
 
 const { DB_HOST } = process.env;
 
-//console.log(process.env);
-
-// const DB_HOST =
-//   "mongodb+srv://Yuliia:hmsPY1D1WxmdpYJA@cluster0.gasf9oq.mongodb.net/db-contacts?retryWrites=true&w=majority";
-
 mongoose
   .connect(DB_HOST)
   .then(() => console.log("Database connection successful"))
