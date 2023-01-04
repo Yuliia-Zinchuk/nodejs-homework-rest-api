@@ -20,12 +20,10 @@ const contactSchema = new Schema(
     phone: {
       type: String,
       match: phoneRegexp,
-      // required: true,
     },
     favorite: {
       type: Boolean,
       default: false,
-      //required: true,
     },
     owner: {
       type: Schema.Types.ObjectId,

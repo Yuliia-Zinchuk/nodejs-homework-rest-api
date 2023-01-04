@@ -7,31 +7,7 @@ const { User } = require("../models/user");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
 
-//-----------------TOKEN------------
-
 const { SECRET_KEY } = process.env;
-
-// const payload = {
-//   id: "63b5447e568b20b9fefcd87a",
-// };
-
-//console.log(token);
-
-//const decodeToken = jwt.decode(token);
-//console.log(decodeToken);
-
-try {
-  const invalidToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjU0NDdlNTY4YjIwYjlmZWZjZDg3YSIsImlhdCI6MTY3MjgyODU2MSwiZXhwIjoxNjcyOTExMzYxfQ.5GR7vN2v6qrB8CiPbuvxeG1Tl4dscfO6eJK2hkU-t97";
-  const result = jwt.verify(token, SECRET_KEY);
-  //console.log(result);
-
-  jwt.verify(invalidToken, SECRET_KEY);
-} catch (error) {
-  console.log(error.message);
-}
-
-//hashPassword("123456");
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
@@ -45,8 +21,10 @@ const signup = async (req, res) => {
   const newUser = await User.create({ ...req.body, password: hashPassword });
 
   res.status(201).json({
-    name: newUser.name,
-    email: newUser.email,
+    user: {
+      email: newUser.email,
+      subscription: newUser.subscription,
+    },
   });
 };
 
@@ -68,9 +46,14 @@ const login = async (req, res) => {
   };
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-  // const token = "12ths.dvdfdb.fbffbff";
+  await User.findByIdAndUpdate(user._id, { token });
+
   res.json({
     token,
+    user: {
+      email: user.email,
+      subscription: user.subscription,
+    },
   });
 };
 
@@ -79,8 +62,15 @@ const getCurrent = async (req, res) => {
   res.json({ email, subscription });
 };
 
+const logout = async (req, res) => {
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id, { token: "" });
+  res.status(204).json();
+};
+
 module.exports = {
   signup: ctrlWrapper(signup),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
+  logout: ctrlWrapper(logout),
 };
