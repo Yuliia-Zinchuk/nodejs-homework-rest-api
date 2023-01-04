@@ -2,7 +2,7 @@ const { User } = require("../models/user");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
 
-const register = async (req, res) => {
+const signup = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
 
@@ -21,5 +21,5 @@ const register = async (req, res) => {
 };
 
 module.exports = {
-  register: ctrlWrapper(register),
+  signup: ctrlWrapper(signup),
 };
