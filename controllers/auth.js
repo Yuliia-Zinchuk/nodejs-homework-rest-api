@@ -1,8 +1,35 @@
+const bcrypt = require("bcryptjs");
+
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 const { User } = require("../models/user");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
 
-const bcrypt = require("bcryptjs");
+//-----------------TOKEN------------
+
+const { SECRET_KEY } = process.env;
+
+// const payload = {
+//   id: "63b5447e568b20b9fefcd87a",
+// };
+
+//console.log(token);
+
+//const decodeToken = jwt.decode(token);
+//console.log(decodeToken);
+
+try {
+  const invalidToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjU0NDdlNTY4YjIwYjlmZWZjZDg3YSIsImlhdCI6MTY3MjgyODU2MSwiZXhwIjoxNjcyOTExMzYxfQ.5GR7vN2v6qrB8CiPbuvxeG1Tl4dscfO6eJK2hkU-t97";
+  const result = jwt.verify(token, SECRET_KEY);
+  //console.log(result);
+
+  jwt.verify(invalidToken, SECRET_KEY);
+} catch (error) {
+  console.log(error.message);
+}
 
 //hashPassword("123456");
 
@@ -36,7 +63,12 @@ const login = async (req, res) => {
     throw HttpError(401, "Email or password is wrong");
   }
 
-  const token = "12ths.dvdfdb.fbffbff";
+  const payload = {
+    id: user._id,
+  };
+
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  // const token = "12ths.dvdfdb.fbffbff";
   res.json({
     token,
   });
