@@ -7,10 +7,17 @@ require("dotenv").config();
 
 const { DB_HOST } = process.env;
 
+mongoose.set("strictQuery", true);
+
 mongoose
   .connect(DB_HOST)
   .then(() => console.log("Database connection successful"))
-  .catch((error) => console.log(error.message));
+  .catch((error) => {
+    console.log(error.message);
+    process.exit(1);
+  });
+
+//.catch((error) => console.log(error.message));
 
 const authRouter = require("./routes/api/auth");
 const contactsRouter = require("./routes/api/contacts");

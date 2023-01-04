@@ -7,8 +7,13 @@ const { handleMongooseError } = require("../helpers");
 // const emailRegexp =
 //   /([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])/;
 
+//[a-z0-9]+@[a-z]+\.edu\.[a-z]{2,3}
 const userSchema = new Schema(
   {
+    name: {
+      type: String,
+      // required: [true, "Password is required"],
+    },
     password: {
       type: String,
       required: [true, "Password is required"],
