@@ -4,6 +4,7 @@ require("dotenv").config();
 const gravatar = require("gravatar");
 const path = require("path");
 const fs = require("fs/promises");
+const Jimp = require("jimp");
 
 const { User } = require("../models/user");
 
@@ -85,9 +86,21 @@ const updateAvatar = async (req, res) => {
   const filename = `${_id}_${originalname}`;
 
   const resultUpload = path.join(avatarsDir, filename);
+
   await fs.rename(tempUpload, resultUpload);
   const avatarURL = path.join("avatars", filename);
   await User.findByIdAndUpdate(_id, { avatarURL });
+
+  //---------rename avatar--------
+  await Jimp.read(resultUpload)
+    .then((lenna) => {
+      return lenna
+        .resize(250, 250) // resize
+        .writeAsync(resultUpload); // save
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   res.json({
     avatarURL,
